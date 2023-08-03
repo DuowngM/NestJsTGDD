@@ -200,6 +200,13 @@ const Cart = () => {
       await publicAxios.put("/products", orderDetails);
       await publicAxios.delete(`cart?idUser=${idUser}`);
       loadCart();
+      localStorage.setItem(
+        "change",
+        JSON.stringify(Math.floor(Math.random() * 1000000000))
+      );
+      const change = localStorage.getItem("change");
+      const effectChange = change ? JSON.parse(change) : undefined;
+      setChangeLocal(effectChange);
       notification.success({
         message: "THANH TOÁN THÀNH CÔNG",
         style: {
@@ -216,8 +223,10 @@ const Cart = () => {
         <div className="header-cart">
           {" "}
           <h2>
-            <ShoppingCartIcon style={{ fontSize: 50 }} />
-            Giỏ hàng của bạn
+            <ShoppingCartIcon
+              style={{ fontSize: 33, marginTop: "-5px", marginRight: "5px" }}
+            />
+            Giỏ hàng của bạn
           </h2>
         </div>
         <div className="middleCart">
@@ -230,11 +239,30 @@ const Cart = () => {
                       className="handleDeleteProduct"
                       onClick={() => handleDeleteProduct(cart?.product_id)}
                     >
-                      X
+                      <i
+                        className="fa-solid fa-trash"
+                        style={{
+                          color: "#ff0000",
+                          fontSize: 22,
+                          marginRight: "25px",
+                        }}
+                      ></i>
                     </button>
-                    <img src={cart?.product_image} width={100} />
+                    <img
+                      src={cart?.product_image}
+                      width={150}
+                      height={90}
+                      style={{ borderRadius: "7px" }}
+                    />
                   </div>
-                  <div className="nameSp" style={{ width: "240px" }}>
+                  <div
+                    className="nameSp"
+                    style={{
+                      width: "200px",
+                      fontWeight: "bold",
+                      fontSize: "17px",
+                    }}
+                  >
                     <p>{cart?.product_name}</p>
                   </div>
                   <div className="buttons_added">
@@ -267,13 +295,13 @@ const Cart = () => {
             ))}
           </ul>
           <div className="total-provisional">
-            <span className="total-product-quantity">
+            <div className="total-product-quantity">
               <span className="total-label">Tạm tính </span>
               {calculateTotalQuantity()} sản phẩm
-            </span>
-            <span className="temp-total-money">
+            </div>
+            <div className="temp-total-money">
               {calculateTotalMoney().toLocaleString() + "₫"}
-            </span>
+            </div>
           </div>
           <hr />
           <div className="infor-customer">

@@ -24,9 +24,10 @@
   align-items: center;
 }
 .total-provisional {
-  display: block;
+  display: flex;
   overflow: hidden;
-  padding: 10px 30px;
+  padding: 10px 43px;
+  justify-content: space-between;
 }
 .total-provisional > span {
   float: left;
@@ -188,5 +189,24 @@
   border-radius: 10px;
 }
 .list-cart {
-  padding: 20px 0;
+  padding: 20px 5px 18px 6px;
+}
+
+.priceSp {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ff3320;
+  width: 150px;
+}
+
+.temp-total-money {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ff3320 !important;
+  margin-right: 36px;
+}
+
+.total-product-quantity {
+  font-size: 22px;
+  font-weight: 500;
 }

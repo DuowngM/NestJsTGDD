@@ -49,7 +49,6 @@ const Register = () => {
         });
       }
       if (response.status === 200) {
-        console.log(response);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("flaguser", JSON.stringify(response.data.user));
         const flaguserJSON = localStorage.getItem("flaguser");

@@ -8,8 +8,5 @@ export class NewOrder {
   total: number;
 
   @IsNotEmpty()
-  note: string;
-
-  @IsNotEmpty()
   method: string;
 }

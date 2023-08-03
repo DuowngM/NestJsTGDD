@@ -10,7 +10,7 @@ import {
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { ChangePassword, LoginDTO, SignupDTO } from './dtos/auth.dto';
-import { JwtAuthGuard } from './jwt/jwtguard';
+import { JwtAuthGuard } from './jwt/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -24,8 +24,8 @@ export class AuthController {
   async signup(@Body() signupDto: SignupDTO, @Res() res: Response) {
     return await this.authService.signup(signupDto, res);
   }
-  @Put('changePassword/:id')
   @UseGuards(JwtAuthGuard)
+  @Put('changePassword/:id')
   async changePassword(
     @Body() changePassword: ChangePassword,
     @Param('id') id: string,

@@ -41,7 +41,6 @@ const ProfileUser = () => {
     const response = await axios.get(
       `http://localhost:8000/users/${flaguser.user_id}`
     );
-
     setUser(response.data.findUser);
     setName(response.data.findUser?.user_name);
     setAddress(response.data.findUser?.address);

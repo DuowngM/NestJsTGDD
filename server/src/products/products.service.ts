@@ -10,7 +10,11 @@ export class ProductsService {
   ) {}
   async getAllProducts(res) {
     try {
-      const products = await this.productsRepository.find();
+      const products = await this.productsRepository.find({
+        order: {
+          product_id: 'DESC',
+        },
+      });
       return res.json({
         products,
       });
@@ -82,8 +86,6 @@ export class ProductsService {
       for (let i = 0; i < infoProduct.length; i++) {
         const productId = infoProduct[i].idProduct;
         const quantity = infoProduct[i].quantity;
-
-        // Retrieve the product from the database by its ID
         const product = await this.productsRepository.findOne({
           where: { product_id: productId },
         });

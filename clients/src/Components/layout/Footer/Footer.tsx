@@ -1,5 +1,42 @@
+import { useState } from "react";
 import "../../css/Footer.css";
+import axios from "axios";
+import { notification } from "antd";
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const handleSendEmail = async () => {
+    console.log(email);
+    if (!isValidEmail(email)) {
+      // Xử lý khi email không hợp lệ
+      notification.error({
+        message: "Email không hợp lệ",
+        style: {
+          top: 95,
+        },
+      });
+      return;
+    }
+    try {
+      const response = await axios.post("http://localhost:8000/send-email", {
+        email,
+      });
+      setEmail("");
+      if (response.status === 200) {
+        notification.success({
+          message: "Hãy kiểm tra email của bạn",
+          style: {
+            top: 95,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <footer className="footer">
@@ -218,6 +255,15 @@ const Footer = () => {
                     </a>
                   </li>
                 </ul>
+                <div>
+                  <input
+                    type="text"
+                    style={{ paddingLeft: "5px", outline: "none" }}
+                    placeholder="Nhập email để nhận quảng cáo"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />{" "}
+                  <button onClick={handleSendEmail}>Submit</button>
+                </div>
               </div>
               <div className="col l-2-4 m-8 c-6">
                 <h3 className="footer__heading">TẢI ỨNG DỤNG TGDD</h3>

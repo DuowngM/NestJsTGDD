@@ -94,7 +94,6 @@ const Orders = () => {
           <table className="order-user">
             <thead>
               <th>STT</th>
-              <th>Số điện thoại</th>
               <th>Tổng tiền</th>
               <th>Note</th>
               <th>Ngày mua</th>
@@ -107,7 +106,6 @@ const Orders = () => {
                 <>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{order.phoneNumber}</td>
                     <td>{order.total.toLocaleString() + "₫"}</td>
                     <td>{order.note}</td>
                     <td>
@@ -118,7 +116,7 @@ const Orders = () => {
                     <td>{order.method}</td>
                     <td>
                       <button onClick={() => handleViewOrder(order.order_id)}>
-                        Xem chi tiết đơn hàng
+                        Chi tiết đơn hàng
                       </button>
                     </td>
                   </tr>
@@ -127,8 +125,8 @@ const Orders = () => {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={7} className="total-amount">
-                  Tổng tiền mua hàng:{" "}
+                <td colSpan={7} style={{ fontSize: "20px" }}>
+                  Tổng tiền đã mua hàng:{" "}
                   <b>{totalAmount.toLocaleString() + "₫"}</b>
                 </td>
               </tr>
@@ -143,16 +141,16 @@ const Orders = () => {
               <Modal.Title>Chi tiết đơn hàng</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <table className="order-details">
+              <table className="order-details" style={{ textAlign: "center" }}>
                 <thead>
                   <tr>
-                    <th>STT</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Ảnh</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Thành tiền</th>
-                    <th>Địa chỉ</th>
+                    <th style={{ width: 150 }}>STT</th>
+                    <th style={{ width: 150 }}>Tên sản phẩm</th>
+                    <th style={{ width: 150 }}>Ảnh</th>
+                    <th style={{ width: 150 }}>Giá</th>
+                    <th style={{ width: 150 }}>Số lượng</th>
+                    <th style={{ width: 150 }}>Thành tiền</th>
+                    <th style={{ width: 150 }}>Địa chỉ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -164,14 +162,14 @@ const Orders = () => {
                         <td>
                           <img src={orderDetail.product_image} width={100} />
                         </td>
-                        <td>{orderDetail.price.toLocaleString() + "₫"}</td>
+                        <td>{orderDetail.price.toLocaleString() + " ₫"}</td>
                         <td>{orderDetail.quantity}</td>
                         <td>
                           {(
                             orderDetail.price * orderDetail.quantity
                           ).toLocaleString() + "₫"}
                         </td>
-                        <td>{orderDetail.address}</td>
+                        <td width={400}>{orderDetail.address}</td>
                       </tr>
                     </>
                   ))}

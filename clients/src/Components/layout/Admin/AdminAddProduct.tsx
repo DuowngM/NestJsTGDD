@@ -97,7 +97,6 @@ const AdminAddProduct = () => {
           price: +price,
           product_stocks: +product_stocks,
         };
-        console.log(infoNewProduct);
         const response = await axios.post(
           "http://localhost:8000/products",
           infoNewProduct

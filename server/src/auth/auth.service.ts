@@ -24,6 +24,7 @@ export class AuthService {
       });
       if (checkPhoneNumber) {
         throw new BadRequestException('phone has been registered');
+        return;
       }
       const hashedPassword = await argon.hash(signupDto.password);
       const user = this.usersRepository.create({
@@ -67,6 +68,7 @@ export class AuthService {
       console.log(error);
     }
   }
+
   async changePassword(changePassword, id, res) {
     try {
       const user = await this.usersRepository.findOne({

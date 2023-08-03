@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import publicAxios from "../../../configAxios/publicAxios";
 import "../../css/Information.css";
 import Header from "../Header/Header";
 import Sidebar from "./Sidebar";
 import Footer from "../Footer/Footer";
 import { notification } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import privateAxios from "../../../configAxios/pritvateAxios";
 const ChangePassword = (): JSX.Element => {
   const location = useLocation();
   useEffect(() => {
@@ -44,7 +44,6 @@ const ChangePassword = (): JSX.Element => {
   };
 
   const handleSubmit = async (id: number) => {
-    const token = localStorage.getItem("token");
     const change = {
       oldPassword,
       newPassword,
@@ -58,14 +57,9 @@ const ChangePassword = (): JSX.Element => {
       });
       return;
     }
-    const response = await publicAxios.put(
+    const response = await privateAxios.put(
       `auth/changePassword/${id}`,
-      change,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      change
     );
     if (response.data.status === 401) {
       notification.error({

@@ -10,8 +10,6 @@ export class OrderDetailsService {
     private orderDetailsRepository: Repository<OrderDetails>,
   ) {}
   async getOneOrderDetails(id, res) {
-    console.log(id);
-
     try {
       const orderDetails = await this.orderDetailsRepository.query(
         `SELECT order_details.order_id,

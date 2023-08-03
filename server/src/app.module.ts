@@ -21,6 +21,8 @@ import { Voucher } from './voucher/voucher.entity';
 import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
 import { OrderDetailsModule } from './order-details/order-details.module';
+import { EmailModule } from './email/email.module';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -55,6 +57,7 @@ import { OrderDetailsModule } from './order-details/order-details.module';
     RateModule,
     AuthModule,
     OrderDetailsModule,
+    EmailModule,
   ],
 })
 export class AppModule {}
