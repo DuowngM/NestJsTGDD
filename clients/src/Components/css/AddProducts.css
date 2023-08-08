@@ -117,7 +117,7 @@
 .list_product th,
 .list_product td {
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .list_product th {
@@ -225,7 +225,7 @@
   background-color: transparent;
   border-radius: 1rem;
   box-sizing: border-box;
-  color: #ffd400  ;
+  color: #ffd400;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;

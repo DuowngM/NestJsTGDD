@@ -262,7 +262,9 @@ const Footer = () => {
                     placeholder="Nhập email để nhận quảng cáo"
                     onChange={(e) => setEmail(e.target.value)}
                   />{" "}
-                  <button onClick={handleSendEmail}>Submit</button>
+                  <button onClick={handleSendEmail} style={{ width: "50px" }}>
+                    Gửi
+                  </button>
                 </div>
               </div>
               <div className="col l-2-4 m-8 c-6">

@@ -16,8 +16,16 @@ import { InfoProduct, NewProduct } from './dtos/products.dto';
 export class ProductsController {
   constructor(public productsService: ProductsService) {}
   @Get()
-  getAllProducts(@Res() res: Response) {
-    return this.productsService.getAllProducts(res);
+  getAllProducts(
+    @Res() res: Response,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.productsService.getAllProducts(res, page, limit);
+  }
+  @Get('/allProducts')
+  getProducts(@Res() res: Response) {
+    return this.productsService.getProducts(res);
   }
   @Get('/details/:id')
   getOneProduct(@Res() res: Response, @Param('id') id: string) {

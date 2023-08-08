@@ -152,10 +152,7 @@ const AdminOrder = () => {
                         <button
                           onClick={() => handleComplete(order.order_id)}
                           className="btn-order"
-                          disabled={
-                            order.status === "Hoàn thành" ||
-                            order.status === "Đã hủy"
-                          }
+                          disabled={order.status === "Hoàn thành"}
                         >
                           Hoàn thành
                         </button>
@@ -163,6 +160,10 @@ const AdminOrder = () => {
                       <td>
                         <button
                           onClick={() => handleCancel(order.order_id)}
+                          style={{
+                            border: "none",
+                            backgroundColor: "transparent",
+                          }}
                           disabled={order.status === "Đã hủy"}
                         >
                           <CancelIcon />
@@ -171,6 +172,10 @@ const AdminOrder = () => {
                       <td>
                         <button
                           onClick={() => handleDeleteProduct(order.order_id)}
+                          style={{
+                            border: "none",
+                            backgroundColor: "transparent",
+                          }}
                         >
                           <DeleteIcon />
                         </button>

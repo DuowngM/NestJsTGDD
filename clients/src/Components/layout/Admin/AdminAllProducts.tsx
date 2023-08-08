@@ -4,7 +4,7 @@ import HeaderAdmin from "./HeaderAdmin";
 import SidebarAdmin from "./SidebarAdmin";
 import { useEffect, useState } from "react";
 import publicAxios from "../../../configAxios/publicAxios";
-import { notification } from "antd";
+import { Pagination, notification } from "antd";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import { useNavigate } from "react-router-dom";
 import { Input } from "antd";
@@ -40,14 +40,26 @@ const AdminAddProduct = () => {
     brand_name: string;
     category_id: number;
   }
+  const [isRotating, setIsRotating] = useState(false);
+
   const [category, setCategory] = useState<CategoryList[] | null>([]);
   const [brand, setBrand] = useState<BrandList[] | null>([]);
   const [products, setProducts] = useState<Products[]>([]);
   const loadProducts = async () => {
-    const response = await axios.get("http://localhost:8000/products");
+    const response = await axios.get(
+      "http://localhost:8000/products/allProducts"
+    );
     setProducts(response.data.products);
   };
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visibleProducts = products.slice(startIndex, startIndex + itemsPerPage);
   const loadCategory = async () => {
     const response = await axios.get("http://localhost:8000/category");
     setCategory(response.data.allCategory);
@@ -75,7 +87,9 @@ const AdminAddProduct = () => {
     );
     return categoryItem ? categoryItem.category_name : "";
   };
+
   const handleStatusProduct = async (id: number) => {
+    setIsRotating(true);
     const productToUpdate: Products | any = products.find(
       (product) => product.product_id === id
     );
@@ -102,6 +116,9 @@ const AdminAddProduct = () => {
         loadProducts();
       }
     }
+    setTimeout(() => {
+      setIsRotating(false);
+    }, 1000);
   };
   const [searchValue, setSearchValue] = useState("");
   const handleSearch = async () => {
@@ -110,6 +127,7 @@ const AdminAddProduct = () => {
     );
     setProducts(response.data.products);
   };
+
   return (
     <div>
       <HeaderAdmin />
@@ -136,15 +154,15 @@ const AdminAddProduct = () => {
                 <th>Tên sản phẩm</th>
                 <th>Số lượng trong kho</th>
                 <th>Giá</th>
-                <th>Mô tả</th>
+                {/* <th>Mô tả</th> */}
                 <th>Loại sản phẩm</th>
                 <th>Hãng sản xuất</th>
                 <th>Trạng thái</th>
                 <th>Chức năng</th>
               </thead>
               <tbody>
-                {products &&
-                  products.map((product, index) => (
+                {visibleProducts &&
+                  visibleProducts.map((product, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
@@ -153,7 +171,7 @@ const AdminAddProduct = () => {
                       <td>{product.product_name}</td>
                       <td>{product.product_stocks}</td>
                       <td>{product.price.toLocaleString() + "₫"}</td>
-                      <td width={400}>{product.description}</td>
+                      {/* <td width={400}>{product.description}</td> */}
                       <td>{getCategoryName(product.categoryId)}</td>
                       <td>{getBrandName(product.brandId)}</td>
                       <td>{product.status}</td>
@@ -162,7 +180,12 @@ const AdminAddProduct = () => {
                           onClick={() =>
                             handleStatusProduct(product.product_id)
                           }
-                          style={{ border: "none" }}
+                          style={{
+                            border: "none",
+                            transform: isRotating ? "rotate(360deg)" : "none",
+                            transition: "transform 1s",
+                            backgroundColor: "transparent",
+                          }}
                         >
                           <ChangeCircleIcon />
                         </button>
@@ -171,6 +194,12 @@ const AdminAddProduct = () => {
                   ))}
               </tbody>
             </table>
+            <Pagination
+              current={currentPage}
+              pageSize={itemsPerPage}
+              total={products.length}
+              onChange={handlePageChange}
+            />
           </div>
         </div>
       </div>

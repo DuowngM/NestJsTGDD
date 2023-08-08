@@ -235,19 +235,6 @@ const Cart = () => {
               <li className="cart-item" key={index}>
                 <div className="cart__item">
                   <div className="imgSp">
-                    <button
-                      className="handleDeleteProduct"
-                      onClick={() => handleDeleteProduct(cart?.product_id)}
-                    >
-                      <i
-                        className="fa-solid fa-trash"
-                        style={{
-                          color: "#ff0000",
-                          fontSize: 22,
-                          marginRight: "25px",
-                        }}
-                      ></i>
-                    </button>
                     <img
                       src={cart?.product_image}
                       width={150}
@@ -290,6 +277,19 @@ const Cart = () => {
                       {(cart?.price * cart?.quantity).toLocaleString() + "₫"}{" "}
                     </p>
                   </div>
+                  <button
+                    className="handleDeleteProduct"
+                    onClick={() => handleDeleteProduct(cart?.product_id)}
+                  >
+                    <i
+                      className="fa-solid fa-trash"
+                      style={{
+                        color: "#ff0000",
+                        fontSize: 22,
+                        marginRight: "25px",
+                      }}
+                    ></i>
+                  </button>
                 </div>
               </li>
             ))}
@@ -300,7 +300,9 @@ const Cart = () => {
               {calculateTotalQuantity()} sản phẩm
             </div>
             <div className="temp-total-money">
-              {calculateTotalMoney().toLocaleString() + "₫"}
+              <span style={{ fontSize: 25 }}>
+                {calculateTotalMoney().toLocaleString() + "₫"}
+              </span>
             </div>
           </div>
           <hr />
@@ -345,7 +347,7 @@ const Cart = () => {
                 />
               </div>
             </div>
-            <div className="delivery">
+            <div className="delivery" style={{ paddingTop: "20px" }}>
               <h5>Chọn cách thức nhận hàng</h5>
               <div className="pick-delivery">
                 <input
@@ -378,21 +380,35 @@ const Cart = () => {
                   Nhận tại cửa hàng
                 </label>
                 {deliveryOption === "home_delivery" && (
-                  <div className="address">
+                  <div className="address" style={{ paddingTop: "20px" }}>
                     <input
                       type="text"
                       className="addressInput"
                       placeholder="Địa chỉ giao hàng"
+                      style={{
+                        width: "300px",
+                        height: "40px",
+                        padding: "10px",
+                      }}
                       value={address}
                       onChange={handleAddressChange}
                     />
                   </div>
                 )}
                 {deliveryOption === "store_pickup" && (
-                  <div className="pickup-branches">
+                  <div
+                    className="pickup-branches"
+                    style={{ paddingTop: "20px" }}
+                  >
                     <h5>Danh sách cửa hàng</h5>
                     <select
                       value={selectedBranch}
+                      style={{
+                        width: "300px",
+                        height: "40px",
+                        outline: "none",
+                        paddingLeft: "10px",
+                      }}
                       onChange={handleBranchChange}
                     >
                       <option>Chọn cửa hàng</option>
@@ -409,6 +425,7 @@ const Cart = () => {
                 <input
                   type="text"
                   className="options"
+                  style={{ padding: "10px" }}
                   placeholder="Yêu cầu khác"
                   onChange={(e) => setNote(e.target.value)}
                 />
@@ -422,6 +439,7 @@ const Cart = () => {
               type="text"
               className="addCoupou"
               placeholder="Nhập mã giảm giá"
+              style={{ padding: "10px" }}
               onChange={(e) => setVoucher(e.target.value)}
             />
             <button className="discount" onClick={() => handleAddDiscount()}>

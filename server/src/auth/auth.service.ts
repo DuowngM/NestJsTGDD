@@ -60,6 +60,7 @@ export class AuthService {
       const token = this.jwtService.sign({ sub: user.user_id });
 
       delete user.password;
+
       return res.status(200).json({
         user,
         token,

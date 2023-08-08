@@ -8,13 +8,31 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product) private productsRepository: Repository<Product>,
   ) {}
-  async getAllProducts(res) {
+  async getProducts(res) {
     try {
       const products = await this.productsRepository.find({
         order: {
           product_id: 'DESC',
         },
       });
+
+      return res.json({
+        products,
+      });
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+  async getAllProducts(res, page, limit) {
+    try {
+      const products = await this.productsRepository.find({
+        order: {
+          product_id: 'DESC',
+        },
+        skip: (page - 1) * limit, // Calculate the number of items to skip based on the page and limit.
+        take: limit,
+      });
+
       return res.json({
         products,
       });

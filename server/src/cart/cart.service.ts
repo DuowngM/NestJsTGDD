@@ -23,9 +23,11 @@ export class CartService {
           'products.product_name as product_name',
           'products.product_image as product_image',
           'products.price as price',
+          'products.status as status',
         ])
         .innerJoin('cart.product', 'products')
         .where('cart.user_id = :id', { id })
+        .andWhere('products.status = :status', { status: 'Available' })
         .getRawMany();
 
       return res.status(200).json({

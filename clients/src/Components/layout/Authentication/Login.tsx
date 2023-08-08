@@ -30,6 +30,8 @@ const Register = () => {
         "http://localhost:8000/auth/login",
         userLogin
       );
+      console.log(response);
+
       if (response.data.user.status === "Unavailable") {
         notification.error({
           message: "Tài khoản đã bị khóa",

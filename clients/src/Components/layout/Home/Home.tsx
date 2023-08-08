@@ -9,7 +9,7 @@ import img3 from "./img/3.png";
 import img4 from "./img/4.png";
 import topImg from "./img/5.png";
 import Header from "../Header/Header";
-import { Card, notification } from "antd";
+import { Card, Pagination, notification } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../redux/hook";
@@ -32,25 +32,62 @@ const Home = () => {
     status: string;
     sold: number;
   }
-  const [products, setProducts] = useState<Products[] | null>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [products, setProducts] = useState<Products[]>([]);
   const flaguserJSON = localStorage.getItem("flaguser");
   const flaguser = flaguserJSON ? JSON.parse(flaguserJSON) : null;
   const dispatch = useAppDispatch();
-  const loadProducts = async () => {
-    const response = await axios.get("http://localhost:8000/products");
-    const allProducts = response.data.products;
-    const available = allProducts.filter(
-      (products: Products) => products.status === "Available"
-    );
-    const sortedProducts = available.sort((a: Products, b: Products) =>
-      a.product_name.localeCompare(b.product_name)
-    );
-    setProducts(sortedProducts);
+  const [selectedOption, setSelectedOption] = useState(""); // Add state for selected option
+
+  const loadProducts = async (selectedOption: string) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/products/allProducts`
+      );
+      const allProducts = response.data.products;
+      const available = allProducts.filter(
+        (products: Products) => products.status === "Available"
+      );
+
+      let sortedProducts: Products[];
+
+      if (selectedOption === "alphabet") {
+        sortedProducts = available.sort((a: Products, b: Products) =>
+          a.product_name.localeCompare(b.product_name)
+        );
+      } else if (selectedOption === "price") {
+        sortedProducts = available.sort(
+          (a: Products, b: Products) => a.price - b.price
+        );
+      } else if (selectedOption === "sold") {
+        sortedProducts = available.sort(
+          (a: Products, b: Products) => b.sold - a.sold
+        );
+      } else {
+        sortedProducts = available;
+      }
+      setProducts(sortedProducts);
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
+
   useEffect(() => {
-    loadProducts();
+    setIsLoading(true);
+    loadProducts(selectedOption);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedOption]);
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visibleProducts = products.slice(startIndex, startIndex + itemsPerPage);
   const settings = {
     dots: true,
     infinite: true,
@@ -185,8 +222,18 @@ const Home = () => {
                 <img src={topImg} width={1195} height={150} />
               </NavLink>
             </div>
+            <div className="filter-products">
+              <select
+                value={selectedOption}
+                onChange={(e) => setSelectedOption(e.target.value)}
+              >
+                <option value="alphabet">Sắp xếp theo bảng chữ cái</option>
+                <option value="price">Sắp xếp theo giá</option>
+                <option value="sold">Sắp xếp theo số lượng đã bán</option>
+              </select>
+            </div>
             <div className="list-product">
-              {products?.map((product, index) => (
+              {visibleProducts?.map((product, index) => (
                 <div className="element-product" key={index}>
                   <Card
                     hoverable
@@ -240,6 +287,12 @@ const Home = () => {
                   </Card>
                 </div>
               ))}
+              <Pagination
+                current={currentPage}
+                pageSize={itemsPerPage}
+                total={products.length}
+                onChange={handlePageChange}
+              />
             </div>
           </div>
         </div>
