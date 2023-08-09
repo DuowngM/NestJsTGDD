@@ -7,18 +7,23 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
+export class JwtRolesGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
+
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.split(' ')[1];
-    if (!token) {
-      throw new UnauthorizedException();
-    }
     try {
       const decoded = this.jwtService.verify(token);
       request.user = decoded;
-      return true;
+
+      if (request.user.roles === 1) {
+        return true;
+      } else {
+        throw new UnauthorizedException(
+          'You do not have permission to access this resource.',
+        );
+      }
     } catch (error) {
       throw new UnauthorizedException();
     }

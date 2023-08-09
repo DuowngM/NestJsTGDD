@@ -38,9 +38,6 @@ const ShopUser = () => {
               <NavLink to={"/admin/orders"} style={{ textDecoration: "none" }}>
                 <p>Tất Cả Đơn Hàng</p>
               </NavLink>
-              <NavLink to={"/"} style={{ textDecoration: "none" }}>
-                <p>Đã Hủy</p>
-              </NavLink>
             </div>
           </div>
           <div className="option_shop">

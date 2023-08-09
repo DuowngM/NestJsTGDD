@@ -149,7 +149,7 @@ const AdminAddProduct = () => {
       <HeaderAdmin />
       <div className="container_shop">
         <SidebarAdmin />
-        <div className="container_right1">
+        <div className="container_right1" style={{ paddingTop: "30px" }}>
           <h2>Thêm sản phẩm</h2>
           <table className="table">
             <tbody>

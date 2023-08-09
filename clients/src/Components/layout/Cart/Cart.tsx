@@ -54,6 +54,8 @@ const Cart = () => {
   const [cart, setCart] = useState<Cart[]>([]);
   const loadCart = async () => {
     const response = await publicAxios.get(`cart/${flaguser.user_id}`);
+    console.log(response);
+
     if (response.status === 200) {
       setCart(response.data.cart);
     }
@@ -133,6 +135,7 @@ const Cart = () => {
   const [changeLocal, setChangeLocal] = useState(0);
   const handleDeleteProduct = async (e: number) => {
     const response = await publicAxios.delete(`cart/${e}/${userId}`);
+
     if (response.status === 200) {
       notification.success({
         message: "Đã xóa sản phẩm khỏi giỏ hàng",
@@ -449,7 +452,7 @@ const Cart = () => {
               handleVoucher ? (
                 <p>Áp dụng ưu đãi thành công</p>
               ) : !handleVoucher ? (
-                <p>Voucher không tồn tại</p>
+                <p style={{ color: "red" }}>Voucher không tồn tại</p>
               ) : null
             ) : null}
           </div>

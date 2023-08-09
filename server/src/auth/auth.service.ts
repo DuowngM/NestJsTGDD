@@ -57,7 +57,10 @@ export class AuthService {
       if (!checkPassword) {
         return res.status(400).json({});
       }
-      const token = this.jwtService.sign({ sub: user.user_id });
+      const token = this.jwtService.sign({
+        sub: user.user_id,
+        roles: user.roles,
+      });
 
       delete user.password;
 

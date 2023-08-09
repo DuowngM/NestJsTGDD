@@ -99,7 +99,7 @@ const AdminVoucher = () => {
       <HeaderAdmin />
       <div className="container_shop">
         <SidebarAdmin />
-        <div className="container_right1">
+        <div className="container_right1" style={{ paddingTop: "30px" }}>
           <h2>Quản lí đơn hàng</h2>
           <div className="addVoucher">
             <button

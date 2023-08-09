@@ -29,7 +29,6 @@ export class CartService {
         .where('cart.user_id = :id', { id })
         .andWhere('products.status = :status', { status: 'Available' })
         .getRawMany();
-
       return res.status(200).json({
         cart,
       });

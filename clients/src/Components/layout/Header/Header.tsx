@@ -53,9 +53,9 @@ function Header() {
       <header className="header">
         <div className="header__top">
           <div className="header_top-container">
-            <Link to="/">
+            <a href="/">
               <img src={logo} width={200} />
-            </Link>
+            </a>
             <div className="header_address">
               Xem giá tồn kho tại: <br /> <span>City</span>
             </div>

@@ -75,7 +75,7 @@ const AdminUsers = () => {
       <HeaderAdmin />
       <div className="container_shop">
         <SidebarAdmin />
-        <div className="container_right1">
+        <div className="container_right1" style={{ paddingTop: "30px" }}>
           <h2>Danh sách người dùng</h2>
           <div className="list-product">
             <table className="list_product">

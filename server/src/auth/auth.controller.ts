@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { ChangePassword, LoginDTO, SignupDTO } from './dtos/auth.dto';
 import { JwtAuthGuard } from './jwt/auth.guard';
+import { JwtRolesGuard } from './jwt/roles.guard';
 
 @Controller('auth')
 export class AuthController {

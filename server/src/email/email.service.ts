@@ -8,8 +8,8 @@ export class EmailService {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'manh.ld2402@gmail.com',
-          pass: 'tpoqhpyqmhufoscl',
+          user: 'duowngm1503@gmail.com',
+          pass: 'aozmdzfjthdslkeb',
         },
       });
       const html_content = fs.readFileSync(
@@ -17,7 +17,7 @@ export class EmailService {
         'utf8',
       );
       const mailOptions = {
-        from: 'manh.ld2402@gmail.com',
+        from: 'duowngm1503@gmail.com',
         to: email,
         subject: 'THEGIOIDIDONG',
         html: html_content,

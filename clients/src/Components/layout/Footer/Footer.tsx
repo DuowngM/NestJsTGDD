@@ -9,7 +9,6 @@ const Footer = () => {
     return emailRegex.test(email);
   };
   const handleSendEmail = async () => {
-    console.log(email);
     if (!isValidEmail(email)) {
       // Xử lý khi email không hợp lệ
       notification.error({
