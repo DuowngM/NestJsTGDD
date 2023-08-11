@@ -198,7 +198,7 @@ const Details = () => {
               </span>
               <div className="price_detail2">
                 <p style={{ color: "rgba(0,0,0,.54)", fontSize: ".85rem" }}>
-                  Giá tốt nhất so với các sản phẩm cùng loại trên Shopee
+                  Giá tốt nhất so với các sản phẩm cùng loại trên thị trường
                 </p>
               </div>
             </div>

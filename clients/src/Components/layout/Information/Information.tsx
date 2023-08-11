@@ -18,6 +18,7 @@ const ProfileUser = () => {
   const [address, setAddress] = useState<string | undefined>("");
   const [gender, setGender] = useState<number | string | undefined>("");
   const [birthday, setBirthday] = useState<string | undefined>("");
+  const [email, setEmail] = useState<string | undefined>("");
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
@@ -34,6 +35,7 @@ const ProfileUser = () => {
     address: string;
     gender: string;
     date_of_birth: string;
+    user_email: string;
   }
 
   const [user, setUser] = useState<UserInfo | null>(null);
@@ -46,6 +48,7 @@ const ProfileUser = () => {
     setAddress(response.data.findUser?.address);
     setGender(response.data.findUser?.gender);
     setBirthday(response.data.findUser?.date_of_birth);
+    setEmail(response.data.findUser?.user_email);
   };
   useEffect(() => {
     loadUser();
@@ -57,6 +60,7 @@ const ProfileUser = () => {
     address,
     gender,
     date_of_birth: birthday,
+    user_email: email,
   };
 
   const handleSave = async () => {
@@ -111,6 +115,16 @@ const ProfileUser = () => {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="label">Email</td>
+                    <td className="label1">
+                      <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </td>
                   </tr>

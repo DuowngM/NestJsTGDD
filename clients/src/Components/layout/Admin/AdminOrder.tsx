@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import privateAxios from "../../../configAxios/pritvateAxios";
 const AdminOrder = () => {
   const flaguserJSON = localStorage.getItem("flaguser");
   const flaguser = flaguserJSON ? JSON.parse(flaguserJSON) : null;
@@ -63,13 +64,14 @@ const AdminOrder = () => {
   const handleViewOrder = async (orderId: number) => {
     handleShow();
     setSelectedOrderId(orderId);
-    const response = await publicAxios.get(`order-details/${orderId}`);
+    const response = await privateAxios.get(`order-details/${orderId}`);
     if (response.data.status === 200) {
       setOrderDetails(response.data.orderDetails);
     }
   };
-  const handleComplete = async (orderId: number) => {
-    const response = await publicAxios.put(`order/${orderId}`);
+
+  const handleComplete = async (orderId: number ) => {
+    const response = await privateAxios.put(`order/${orderId}`);
     if (response.status === 200) {
       notification.success({
         message: "Cập nhật trạng thái thành công",

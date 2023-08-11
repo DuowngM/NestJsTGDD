@@ -8,10 +8,13 @@ import {
   Put,
   Query,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Response } from 'express';
 import { InfoProduct, NewProduct } from './dtos/products.dto';
+import { JwtAuthGuard } from 'src/auth/jwt/auth.guard';
+import { JwtRolesGuard } from 'src/auth/jwt/roles.guard';
 @Controller('products')
 export class ProductsController {
   constructor(public productsService: ProductsService) {}
@@ -23,6 +26,7 @@ export class ProductsController {
   ) {
     return this.productsService.getAllProducts(res, page, limit);
   }
+  @UseGuards(JwtAuthGuard, JwtRolesGuard)
   @Get('/allProducts')
   getProducts(@Res() res: Response) {
     return this.productsService.getProducts(res);

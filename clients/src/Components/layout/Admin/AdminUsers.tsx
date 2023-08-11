@@ -7,6 +7,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
+import privateAxios from "../../../configAxios/pritvateAxios";
 const AdminUsers = () => {
   const flaguserJSON = localStorage.getItem("flaguser");
   const flaguser = flaguserJSON ? JSON.parse(flaguserJSON) : null;
@@ -26,6 +27,7 @@ const AdminUsers = () => {
     gender: number;
     date_of_birth: string;
     roles: number;
+    user_email: string;
     status: string;
   }
   const [users, setUsers] = useState([]);
@@ -40,8 +42,16 @@ const AdminUsers = () => {
   }, []);
   const handleLock = async (id: number) => {
     try {
-      const response = await publicAxios.patch(`users/status/${id}`);
+      const response = await privateAxios.patch(`users/status/${id}`);
+
       if (response.status === 200) {
+        const lock_user = response.data.findUser;
+        const lock_email = lock_user.user_email;
+
+        await privateAxios.post(`http://localhost:8000/send-email/lock_user`, {
+          lock_email,
+        });
+         
         notification.success({
           message: "Đã khóa tài khoản",
           style: {
@@ -85,7 +95,7 @@ const AdminUsers = () => {
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
                 <th>Giới tính</th>
-                <th>Ngày sinh</th>
+                <th>Email</th>
                 <th>Role</th>
                 <th>Trạng thái</th>
                 <th>Chức năng</th>
@@ -104,7 +114,7 @@ const AdminUsers = () => {
                         {user.gender === 1 && "Nữ"}
                         {user.gender === 2 && "Khác"}
                       </td>
-                      <td>{user.date_of_birth}</td>
+                      <td>{user.user_email}</td>
                       <td>
                         {" "}
                         {user.roles === 0 && "User"}

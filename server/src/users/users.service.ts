@@ -39,6 +39,7 @@ export class UsersService {
       findUser.address = updatedUser.address;
       findUser.gender = updatedUser.gender;
       findUser.date_of_birth = updatedUser.date_of_birth;
+      findUser.user_email = updatedUser.user_email;
       await this.usersRepository.save(findUser);
       return res.json({
         findUser,
@@ -56,6 +57,7 @@ export class UsersService {
       await this.usersRepository.save(findUser);
       return res.status(200).json({
         message: 'Update successful',
+        findUser,
       });
     } catch (error) {
       throw new BadRequestException(error);

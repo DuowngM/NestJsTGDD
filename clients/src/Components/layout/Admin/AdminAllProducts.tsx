@@ -8,6 +8,7 @@ import { Pagination, notification } from "antd";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import { useNavigate } from "react-router-dom";
 import { Input } from "antd";
+import privateAxios from "../../../configAxios/pritvateAxios";
 const { Search } = Input;
 
 const AdminAddProduct = () => {
@@ -46,9 +47,7 @@ const AdminAddProduct = () => {
   const [brand, setBrand] = useState<BrandList[] | null>([]);
   const [products, setProducts] = useState<Products[]>([]);
   const loadProducts = async () => {
-    const response = await axios.get(
-      "http://localhost:8000/products/allProducts"
-    );
+    const response = await privateAxios.get("/products/allProducts");
     setProducts(response.data.products);
   };
   const itemsPerPage = 5;
